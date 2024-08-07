@@ -5,6 +5,13 @@ script-providers:
   dynamic-providers:
     url: https://raw.githubusercontent.com/kaeltheron/MyStash/main/dynamic-providers.js
     interval: 86400
+
+proxy-providers:
+  222222:
+    url: https://nodefree.githubrowcontent.com/2024/08/20240806.yamlclash
+    interval: 600
+
+
 rule-providers:
   anti-AD:
     type: http
