@@ -3,5 +3,5 @@ desc: 动态订阅
 
 script-providers:
   dynamic-providers:
-    url: https://raw.githubusercontent.com/kaeltheron/Stash/main/dynamic-provider.js?token=GHSAT0AAAAAACVYRXB7PPTA3246CNFSY5NWZVS44GQ
+    url: https://raw.githubusercontent.com/kaeltheron/MyStash/main/dynamic-providers.js
     interval: 86400
