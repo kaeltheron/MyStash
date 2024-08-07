@@ -12,7 +12,9 @@ const fullDate = `${year}${month}${day}`;
 const overrideContent = `
 proxy-providers:
   dynamic-provider:
-    url: https://nodefree.githubrowcontent.com/${year}/${month}/${fullDate}.yaml`;
+    url: https://nodefree.githubrowcontent.com/${year}/${month}/${fullDate}.yaml
+    interval: 3600`;
+console.log(overrideContent);
 $done({
   overrideContent
 })
