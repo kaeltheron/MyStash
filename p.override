@@ -8,6 +8,6 @@ script-providers:
 
 proxy-providers:
   222222:
-    url: https://nodefree.githubrowcontent.com/2024/08/20240806.yamlclash
+    url: https://nodefree.githubrowcontent.com/2024/08/20240806.yaml
     interval: 600
 
