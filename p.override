@@ -5,7 +5,7 @@ desc: 动态订阅
 
 
 rules:
-  - DOMAIN-SUFFIX,nodefree.githubrowcontent.com,direct
+  - DOMAIN-KEYWORD,nodefree,DIRECT
 
 
 proxy-providers:
@@ -23,7 +23,7 @@ proxy-providers:
 
 proxy-groups:
   - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
-    name: mynode
+    name: OPENAI
     type: url-test
     use:
       - freenodes1
