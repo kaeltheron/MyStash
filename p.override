@@ -15,4 +15,18 @@ proxy-providers:
     url: https://nodefree.githubrowcontent.com/2024/08/20240810.yaml
     interval: 86400
 
+proxy-groups:
+  - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+    name: mynode
+    type: url-test
+    use:
+      - freenodes1
+      - freenodes2
+      - freenodes3
+    filter: "美国|🇺🇲|US|(?i)States|America|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(?i)US|United States"
+
+
+
+
+
 
