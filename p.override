@@ -13,15 +13,15 @@ rules:
 
 proxy-providers:
   freenodes1:
-    url: https://nodefree.githubrowcontent.com/2025/03/20250321.yaml
+    url: https://nodefree.githubrowcontent.com/2025/03/20250322.yaml
     interval: 86400
 
   freenodes2:
-    url: https://nodefree.githubrowcontent.com/2025/03/20250320.yaml
+    url: https://nodefree.githubrowcontent.com/2025/03/20250321.yaml
     interval: 86400
 
   freenodes3:
-    url: https://nodefree.githubrowcontent.com/2025/03/20250319.yaml
+    url: https://nodefree.githubrowcontent.com/2025/03/20250320.yaml
     interval: 86400
 
 proxy-groups:
