@@ -11,7 +11,7 @@
       "external_ui": "/etc/sing-box/ui",
       "secret": "",
       "external_ui_download_url": "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip",
-      "external_ui_download_detour": "➡️ 直连",
+      "external_ui_download_detour": "直连",
       "default_mode": "rule"
     },
   "cache_file": {
@@ -25,8 +25,8 @@
  {
    "servers": 
    [
-     {"tag": "dns_direct", "address": "223.5.5.5", "address_strategy": "prefer_ipv6", "strategy": "prefer_ipv6", "detour": "➡️ 直连"},
-     {"tag": "dns_proxy", "address": "tls://8.8.8.8", "address_strategy": "prefer_ipv6", "strategy": "prefer_ipv6", "detour": "🚀 节点选择"}
+     {"tag": "dns_direct", "address": "223.5.5.5", "address_strategy": "prefer_ipv6", "strategy": "prefer_ipv6", "detour": "直连"},
+     {"tag": "dns_proxy", "address": "tls://8.8.8.8", "address_strategy": "prefer_ipv6", "strategy": "prefer_ipv6", "detour": "节点选择"}
    ],
    "rules": 
    [
