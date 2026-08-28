@@ -207,7 +207,7 @@ rules:
   - RULE-SET,pixiv_domain,国际媒体
   - RULE-SET,gfw_domain,国际媒体
   - RULE-SET,cn_domain,国内直连
-  - RULE-SET,cloudflare_domain,国内直连
+  - RULE-SET,cloudflare_domain,Google
   - RULE-SET,geolocation-!cn,兜底分流
 
   - RULE-SET,google_ip,Google
@@ -215,7 +215,7 @@ rules:
   - RULE-SET,telegram_ip,Telegram
   - RULE-SET,twitter_ip,国际媒体
   - RULE-SET,cn_ip,国内直连
-  - RULE-SET,cloudflare_ip,国内直连
+  - RULE-SET,cloudflare_ip, Google
 
   - MATCH,兜底分流
 
