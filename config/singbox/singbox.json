@@ -54,6 +54,7 @@
     ],
     "rules": [
       {
+        "inbound": ["tun-in", "mixed-in"],
         "query_type": ["HTTPS", "SVCB"],
         "action": "reject"
       },
@@ -242,17 +243,17 @@
     "tag": "自动选择",
     "type": "urltest",
     "outbounds": [],
-    "url": "http://www.gstatic.com/generate_204",
+    "url": "https://www.gstatic.com/generate_204",
     "interval": "5m",
-    "tolerance": 20
+    "tolerance": 40
   },
   {
     "tag": "美国节点",
     "type": "urltest",
     "outbounds": [],
-    "url": "http://www.gstatic.com/generate_204",
+    "url": "https://www.gstatic.com/generate_204",
     "interval": "5m",
-    "tolerance": 20
+    "tolerance": 40
   },
   {
     "tag": "美国优选",
@@ -263,33 +264,33 @@
     "tag": "新加坡节点",
     "type": "urltest",
     "outbounds": [],
-    "url": "http://www.gstatic.com/generate_204",
+    "url": "https://www.gstatic.com/generate_204",
     "interval": "5m",
-    "tolerance": 20
+    "tolerance": 40
   },
   {
     "tag": "港台节点",
     "type": "urltest",
     "outbounds": [],
-    "url": "http://www.gstatic.com/generate_204",
+    "url": "https://www.gstatic.com/generate_204",
     "interval": "5m",
-    "tolerance": 20
+    "tolerance": 40
   },
   {
     "tag": "日韩节点",
     "type": "urltest",
     "outbounds": [],
-    "url": "http://www.gstatic.com/generate_204",
+    "url": "https://www.gstatic.com/generate_204",
     "interval": "5m",
-    "tolerance": 20
+    "tolerance": 40
   },
   {
     "tag": "欧洲节点",
     "type": "urltest",
     "outbounds": [],
-    "url": "http://www.gstatic.com/generate_204",
+    "url": "https://www.gstatic.com/generate_204",
     "interval": "5m",
-    "tolerance": 20
+    "tolerance": 40
   },
   {
     "tag": "直连",
