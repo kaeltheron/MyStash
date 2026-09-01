@@ -400,13 +400,13 @@
         "tag": "reject_ads",
         "type": "remote",
         "format": "binary",
-        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/SingBox/AdvertisingLite/AdvertisingLite.srs"
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/QuixoticHeart/rule-set/refs/heads/ruleset/singbox/version5/adrules.srs"
       },
       {
         "tag": "paypal",
         "type": "remote",
         "format": "binary",
-        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/SingBox/PayPal/PayPal.srs"
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/QuixoticHeart/rule-set/refs/heads/ruleset/singbox/version5/PayPal.srs"
       },
       {
         "tag": "private_domain",
