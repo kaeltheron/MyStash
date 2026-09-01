@@ -399,7 +399,7 @@
         "tag": "reject_ads",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/SingBox/AdvertisingLite/AdvertisingLite.srs"
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/SingBox/AdvertisingLite/AdvertisingLite.srs"
       },
       {
         "tag": "paypal",
