@@ -293,7 +293,7 @@
   "http_clients": [
     {
       "tag": "system_client",
-      "detour": "direct"
+      "detour": "直联"
     }
   ],
   "route": {
