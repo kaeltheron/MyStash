@@ -305,7 +305,6 @@
   "route": {
     "auto_detect_interface": true,
     "default_http_client": "system_client",
-    "default_domain_resolver": "remote-dns",
     "final": "兜底分流",
     "rules": [
       {
