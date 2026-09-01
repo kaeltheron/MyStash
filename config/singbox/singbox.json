@@ -292,7 +292,8 @@
 ],
   "http_clients": [
     {
-      "tag": "system_client"
+      "tag": "system_client",
+      "detour": "直连"
     }
   ],
   "route": {
@@ -549,7 +550,7 @@
         "tag": "cloudflare_ip",
         "type": "remote",
         "format": "binary",
-        "url": "https://gh-proxy.com/https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cloudflare.srs"
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cloudflare.srs"
       }
     ]
   }
