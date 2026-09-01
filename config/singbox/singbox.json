@@ -117,21 +117,19 @@
     "type": "selector",
     "outbounds": [
       "自动选择",
-      "direct",
+      "直联",
       "港台节点",
       "日韩节点",
       "新加坡节点",
       "美国节点",
+      "美国优选",
       "欧洲节点"
     ]
   },
   {
     "tag": "谷歌云",
-    "type": "urltest",
-    "outbounds": [],
-    "url": "http://www.gstatic.com/generate_204",
-    "interval": "5m",
-    "tolerance": 10
+    "type": "selector",
+    "outbounds": []
   },
   {
     "tag": "Google",
@@ -139,6 +137,7 @@
     "outbounds": [
       "节点选择",
       "美国节点",
+      "美国优选",
       "日韩节点",
       "新加坡节点"
     ]
@@ -149,6 +148,7 @@
     "outbounds": [
       "节点选择",
       "美国节点",
+      "美国优选",
       "日韩节点",
       "新加坡节点",
       "欧洲节点"
@@ -163,6 +163,7 @@
       "日韩节点",
       "新加坡节点",
       "美国节点",
+      "美国优选",
       "欧洲节点",
       "自动选择"
     ]
@@ -176,6 +177,7 @@
       "日韩节点",
       "新加坡节点",
       "美国节点",
+      "美国优选",
       "欧洲节点",
       "自动选择"
     ]
@@ -186,6 +188,7 @@
     "outbounds": [
       "谷歌云",
       "美国节点",
+      "美国优选",
       "日韩节点",
       "新加坡节点",
       "节点选择"
@@ -199,16 +202,17 @@
       "日韩节点",
       "新加坡节点",
       "美国节点",
+      "美国优选",
       "欧洲节点",
       "自动选择",
-      "direct"
+      "直联"
     ]
   },
   {
     "tag": "国内直连",
     "type": "selector",
     "outbounds": [
-      "direct",
+      "直联",
       "节点选择",
       "日韩节点",
       "港台节点",
@@ -222,62 +226,67 @@
       "节点选择",
       "新加坡节点",
       "美国节点",
+      "美国优选",
       "欧洲节点",
       "自动选择",
-      "direct"
+      "直联"
     ]
   },
   {
     "tag": "自动选择",
     "type": "urltest",
-    "outbounds": [
-      "港台节点",
-      "日韩节点",
-      "新加坡节点",
-      "美国节点",
-      "欧洲节点"
-    ],
+    "outbounds": [],
     "url": "http://www.gstatic.com/generate_204",
     "interval": "5m",
-    "tolerance": 10
+    "tolerance": 20
   },
   {
     "tag": "美国节点",
     "type": "urltest",
     "outbounds": [],
     "url": "http://www.gstatic.com/generate_204",
-    "interval": "5m"
+    "interval": "5m",
+    "tolerance": 20
+  },
+  {
+    "tag": "美国优选",
+    "type": "selector",
+    "outbounds": []
   },
   {
     "tag": "新加坡节点",
     "type": "urltest",
     "outbounds": [],
     "url": "http://www.gstatic.com/generate_204",
-    "interval": "5m"
+    "interval": "5m",
+    "tolerance": 20
   },
   {
     "tag": "港台节点",
     "type": "urltest",
     "outbounds": [],
     "url": "http://www.gstatic.com/generate_204",
-    "interval": "5m"
+    "interval": "5m",
+    "tolerance": 20
   },
   {
     "tag": "日韩节点",
     "type": "urltest",
     "outbounds": [],
     "url": "http://www.gstatic.com/generate_204",
-    "interval": "5m"
+    "interval": "5m",
+    "tolerance": 20
   },
   {
     "tag": "欧洲节点",
     "type": "urltest",
     "outbounds": [],
     "url": "http://www.gstatic.com/generate_204",
-    "interval": "5m"
+    "interval": "5m",
+    "tolerance": 20
   },
   {
-    "tag": "direct",
+    "tag": "直联",
     "type": "direct"
   }
 ],
