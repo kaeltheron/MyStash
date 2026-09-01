@@ -54,12 +54,6 @@
     ],
     "rules": [
       {
-        "inbound": ["tun-in", "mixed-in"],
-        "query_type": ["HTTPS", "SVCB"],
-        "action": "reject"
-      },
-      {
-        "inbound": ["tun-in", "mixed-in"],
         "query_type": ["HTTPS", "SVCB"],
         "action": "reject"
       },
