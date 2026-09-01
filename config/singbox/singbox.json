@@ -331,6 +331,14 @@
         "action": "reject"
       },
       {
+        "domain_suffix": [
+          "993077.xyz",
+          "992105.xyz"
+        ],
+        "action": "route",
+        "outbound": "直连"
+      },
+      {
         "ip_is_private": true,
         "action": "route",
         "outbound": "直连"
