@@ -299,6 +299,7 @@
   "route": {
     "auto_detect_interface": true,
     "default_http_client": "system_client",
+    "default_domain_resolver": "remote-dns",
     "final": "兜底分流",
     "rules": [
       {
@@ -406,7 +407,7 @@
         "tag": "paypal",
         "type": "remote",
         "format": "binary",
-        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/QuixoticHeart/rule-set/refs/heads/ruleset/singbox/version5/PayPal.srs"
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/QuixoticHeart/rule-set/refs/heads/ruleset/singbox/version5/paypal.srs"
       },
       {
         "tag": "private_domain",
