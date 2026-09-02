@@ -31,6 +31,7 @@ dns:
     - '*.y.qq.com'
     - xbox.*.microsoft.com
     - '*.*.xboxlive.com'
+    - +.xn--ngstr-lra8j.com
     - '*.srv.nintendo.net'
     - '*.cmpassport.com'
 
