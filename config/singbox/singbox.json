@@ -97,6 +97,7 @@
     ],
     "final": "proxy-doh",
     "strategy": "prefer_ipv4"
+    "optimistic": true
   },
   "inbounds": [
     {
