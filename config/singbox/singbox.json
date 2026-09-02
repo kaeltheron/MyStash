@@ -41,7 +41,7 @@
       "type": "https",
       "server": "cloudflare-dns.com",
       "domain_resolver": "hosts",
-      "detour": "兜底分流"
+      "detour": "Google"
     },
     {
       "tag": "fakeip",
