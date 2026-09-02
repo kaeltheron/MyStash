@@ -17,88 +17,95 @@
       "default_mode": "rule"
     }
   },
-    "dns": {
-    "servers": [
-      {
-        "tag": "hosts",
-        "type": "hosts",
-        "predefined": {
-          "dns.alidns.com": ["223.5.5.5", "223.6.6.6"],
-          "cloudflare-dns.com": ["1.1.1.1", "1.0.0.1"]
-        }
-      },
-      {
-        "tag": "local-dns",
-        "type": "local",
-        "prefer_go": true
-      },
-      {
-        "tag": "cn-doh",
-        "type": "https",
-        "server": "dns.alidns.com",
-        "domain_resolver": "hosts"
-      },
-      {
-        "tag": "proxy-doh",
-        "type": "https",
-        "server": "cloudflare-dns.com",
-        "domain_resolver": "hosts",
-        "detour": "Google"
-      },
-      {
-        "tag": "fakeip",
-        "type": "fakeip",
-        "inet4_range": "198.18.0.0/15",
-        "inet6_range": "fc00::/18"
+"dns": {
+  "servers": [
+    {
+      "tag": "hosts",
+      "type": "hosts",
+      "predefined": {
+        "cloudflare-dns.com": ["1.1.1.1", "1.0.0.1"]
       }
-    ],
-    "rules": [
-      {
-        "query_type": ["HTTPS", "SVCB"],
-        "action": "reject"
-      },
-      {
-        "domain_suffix": [
-          "lan",
-          "local",
-          "msftconnecttest.com",
-          "msftncsi.com",
-          "music.163.com",
-          "y.qq.com",
-          "xboxlive.com",
-          "srv.nintendo.net",
-          "cmpassport.com"
-        ],
-        "domain_keyword": ["stun", "time", "xbox"],
-        "server": "local-dns",
-        "action": "route"
-      },
-      {
-        "clash_mode": "direct",
-        "server": "cn-doh",
-        "action": "route"
-      },
-      {
-        "clash_mode": "global",
-        "server": "fakeip",
-        "action": "route"
-      },
-      {
-        "rule_set": "cn_domain",
-        "server": "cn-doh",
-        "action": "route"
-      },
-      {
-        "query_type": ["A", "AAAA"],
-        "server": "fakeip",
-        "rewrite_ttl": 1,
-        "action": "route"
-      }
-    ],
-    "final": "proxy-doh",
-    "strategy": "prefer_ipv4",
-    "optimistic": true
-  },
+    },
+    {
+      "tag": "local-dns",
+      "type": "local",
+      "prefer_go": true
+    },
+    {
+      "tag": "cn-doh",
+      "type": "https",
+      "server": "223.5.5.5"
+    },
+    {
+      "tag": "proxy-doh",
+      "type": "https",
+      "server": "cloudflare-dns.com",
+      "domain_resolver": "hosts",
+      "detour": "兜底分流"
+    },
+    {
+      "tag": "fakeip",
+      "type": "fakeip",
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    }
+  ],
+  "rules": [
+    {
+      "query_type": ["HTTPS", "SVCB"],
+      "action": "reject"
+    },
+    {
+      "domain_suffix": [
+        "gh-proxy.com",
+        "githubusercontent.com",
+        "github.com"
+      ],
+      "server": "cn-doh",
+      "action": "route"
+    },
+    {
+      "domain_suffix": [
+        "lan",
+        "local",
+        "msftconnecttest.com",
+        "msftncsi.com",
+        "music.163.com",
+        "y.qq.com",
+        "xboxlive.com",
+        "srv.nintendo.net",
+        "cmpassport.com"
+      ],
+      "domain_keyword": ["stun", "time", "xbox"],
+      "server": "local-dns",
+      "action": "route"
+    },
+    {
+      "clash_mode": "direct",
+      "server": "cn-doh",
+      "action": "route"
+    },
+    {
+      "clash_mode": "global",
+      "server": "fakeip",
+      "action": "route"
+    },
+    {
+      "rule_set": "cn_domain",
+      "server": "cn-doh",
+      "action": "route"
+    },
+    {
+      "query_type": ["A", "AAAA"],
+      "server": "fakeip",
+      "rewrite_ttl": 1,
+      "action": "route"
+    }
+  ],
+  "final": "proxy-doh",
+  "strategy": "prefer_ipv4",
+  "optimistic": true
+},
   "inbounds": [
     {
       "tag": "tun-in",
