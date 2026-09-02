@@ -1,0 +1,335 @@
+
+proxy-providers:
+  sub:
+    url: 订阅
+    type: http
+    interval: 0
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+    proxy: 直连
+    
+  gcp: 
+    type: http
+    url: 订阅 2
+    interval: 3600
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+    proxy: 直连
+
+# 节点信息
+proxies:
+  - {name: 直连, type: direct}
+
+# 全局配置 
+mixed-port: 7890
+allow-lan: true
+bind-address: "*"
+ipv6: true
+unified-delay: true
+tcp-concurrent: true
+geodata-mode: true
+log-level: info
+keep-alive-idle: 600
+keep-alive-interval: 15
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+external-controller: 0.0.0.0:9090
+secret: ""
+external-ui: ui
+external-ui-url: "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+
+# 嗅探
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
+
+# 入站
+tun:
+  enable: true
+  stack: mixed
+  dns-hijack: ["any:53", "tcp://any:53"]
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+
+# DNS模块
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: true
+  use-hosts: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - "+.lan"
+    - "+.local"
+    - "rule-set:cn_domain"
+    - "rule-set:private_domain"
+    - "+.apple.com"
+    - "+.services.googleapis.cn"
+
+  nameserver:
+    - https://120.53.53.53/dns-query
+    - https://223.5.5.5/dns-query
+
+  proxy-server-nameserver:
+    - https://120.53.53.53/dns-query
+    - https://223.5.5.5/dns-query
+
+  nameserver-policy:
+    "rule-set:cn_domain,private_domain":
+      - https://120.53.53.53/dns-query
+      - https://223.5.5.5/dns-query
+    "geosite:geolocation-!cn":
+      - https://dns.cloudflare.com/dns-query
+      - https://dns.google/dns-query
+
+proxy-groups:
+
+  - name: Google
+    type: select
+    icon: https://gh.992105.xyz/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
+    proxies: [节点选择,美国节点,美国优选,日韩节点,新加坡节点]
+  - name: "谷歌云"
+    type: select
+    use:
+      -  gcp
+    dialer-proxy: 日韩节点
+    
+  - name: Telegram
+    type: select
+    icon: https://gh.992105.xyz/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+    proxies: [节点选择,谷歌云,港台节点,日韩节点,新加坡节点,美国节点,欧洲节点,自动选择]
+
+  - name: 国际媒体
+    type: select
+    icon: https://gh.992105.xyz/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png
+    proxies: [节点选择,谷歌云,港台节点,日韩节点,新加坡节点,美国节点,欧洲节点,自动选择]
+
+  - name: OPENAI
+    icon: https://gh.992105.xyz/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bot.png
+    type: select
+    proxies: [谷歌云,美国节点, 美国优选,日韩节点,新加坡节点,节点选择]
+
+  - name: YouTube
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png
+    proxies: [节点选择,美国节点,美国优选,日韩节点,新加坡节点,欧洲节点]
+
+  - name: Github
+    icon: 'https://gh.992105.xyz/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png'
+    type: select
+    proxies:  [节点选择,谷歌云,日韩节点,新加坡节点,美国节点,欧洲节点,自动选择,直连]
+
+  - name: 国内直连
+    icon: https://gh.992105.xyz/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/DomesticMedia.png
+    type: select
+    proxies:  [直连,节点选择,日韩节点,港台节点,自动选择]
+
+  - name: 兜底分流
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png
+    proxies:  [节点选择,谷歌云,美国节点,欧洲节点,自动选择,直连]
+
+  - name: 节点选择
+    type: select
+    icon: https://gh.992105.xyz/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png
+    proxies: [自动选择,谷歌云,直连,港台节点,日韩节点,新加坡节点,美国节点,欧洲节点]
+
+  - name: 自动选择
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto.png
+    type: url-test
+    include-all: true
+    exclude-type: direct
+    tolerance: 10
+    filter: "^((?!(直连)).)*$"
+
+  #分隔,下面是地区分组
+  - name: 美国节点
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
+    type: url-test
+    include-all: true
+    exclude-type: direct
+    filter: "(?i)美|us|unitedstates|united states"
+
+  - name: 美国优选
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/US.png
+    type: select
+    include-all: true
+    exclude-type: direct
+    filter: "(?i)美|us|unitedstates|united states"
+
+  - name: 新加坡节点
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
+    type: url-test
+    include-all: true
+    exclude-type: direct
+    filter: "(?i)(新|sg|singapore)"
+
+  - name: 港台节点
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
+    type: url-test
+    include-all: true
+    exclude-type: direct
+    filter: "(?i)港|hk|hongkong|hong kong|(?i)台|tw|taiwan"
+
+  - name: 日韩节点
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
+    type: load-balance
+    include-all: true
+    exclude-type: direct
+    filter: "日|🇯🇵|东京|JP|(?i)Japan|韩|🇰🇷|首尔|KR|(?i)Korea"
+
+  - name: 欧洲节点
+    icon: https://gh.992105.xyz/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/EU.png
+    type: url-test
+    include-all: true
+    exclude-type: direct
+    filter: '英国|🇬🇧|UK|GB|德国|🇩🇪|DE|法国|🇫🇷|FR|荷兰|🇳🇱|NL|PL|波兰|🇵🇱'
+
+
+rules:
+  - RULE-SET,reject,REJECT
+  - DOMAIN-SUFFIX,992105.xyz,DIRECT
+  - DOMAIN-SUFFIX,993077.xyz,DIRECT
+  - RULE-SET,private_ip,直连,no-resolve
+  - RULE-SET,private_domain,直连
+  - RULE-SET,paypal,Google
+  - RULE-SET,github_domain,Github
+  - RULE-SET,twitter_domain,国际媒体
+  - RULE-SET,youtube_domain,YouTube
+  - RULE-SET,google_domain,Google
+  - RULE-SET,telegram_domain,Telegram
+  - RULE-SET,netflix_domain,国际媒体
+  - RULE-SET,biliintl_domain,国际媒体
+  - RULE-SET,bilibili_domain,国内直连
+  - RULE-SET,openai_domain,OPENAI
+  - RULE-SET,reddit_domain,国际媒体
+  - RULE-SET,spotify_domain,国际媒体
+  - RULE-SET,tiktok_domain,国际媒体
+  - RULE-SET,pixiv_domain,国际媒体
+  - RULE-SET,gfw_domain,国际媒体
+  - RULE-SET,cn_domain,国内直连
+  - RULE-SET,cloudflare_domain,国际媒体
+  - RULE-SET,geolocation-!cn,兜底分流
+
+  - RULE-SET,google_ip,Google
+  - RULE-SET,netflix_ip,国际媒体
+  - RULE-SET,telegram_ip,Telegram
+  - RULE-SET,twitter_ip,国际媒体
+  - RULE-SET,cn_ip,国内直连
+  - RULE-SET,cloudflare_ip,国际媒体
+
+  - MATCH,兜底分流
+
+
+
+rule-anchor:
+  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+  yaml: &yaml {type: http, interval: 86400, behavior: classical, format: yaml}
+rule-providers:
+  private_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"
+  cn_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
+  biliintl_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/biliintl.mrs"
+  github_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"
+  twitter_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs"
+  youtube_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"
+  google_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"
+  telegram_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"
+  netflix_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"
+  bilibili_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bilibili.mrs"
+  openai_domain:
+    <<: *domain
+    url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-!cn.mrs"
+  reddit_domain:
+      <<: *domain
+      url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/reddit.mrs"          
+  spotify_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"
+  tiktok_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"
+  pixiv_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/pixiv.mrs"
+  cloudflare_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cloudflare.mrs"
+  gfw_domain:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"
+
+
+  geolocation-!cn:
+    <<: *domain
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"
+
+  private_ip:
+    <<: *ip
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
+  cn_ip:
+    <<: *ip
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"
+  google_ip:
+    <<: *ip
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"
+  netflix_ip:
+    <<: *ip
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"
+  twitter_ip:
+    <<: *ip
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs"
+  telegram_ip:
+    <<: *ip
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"
+  cloudflare_ip:
+    <<: *ip
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cloudflare.mrs"
+
+  #非二进制规则
+  paypal:
+    <<: *yaml
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PayPal/PayPal.yaml"
+  
+  reject:
+    <<: *yaml
+    url: "https://gh.992105.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdvertisingLite/AdvertisingLite_Classical.yaml"
