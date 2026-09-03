@@ -1,0 +1,22 @@
+name: Telegram Redirect to Turrit
+desc: 将 t.me 网页链接直接 307 重定向唤醒 Turrit 客户端
+
+http:
+  mitm:
+    - "t.me"
+
+  url-rewrite:
+    # 匹配私密邀请链接 (+ 开头或 joinchat/)
+    - match: ^https?:\/\/t\.me\/(?:\+|joinchat\/)([A-Za-z0-9_-]+)\/?$
+      location: turrit://join?invite=$1
+      status-code: 307
+
+    # 匹配普通频道、群组、个人主页及具体消息 ID (如 t.me/durov 或 t.me/durov/1)
+    - match: ^https?:\/\/t\.me\/([A-Za-z][A-Za-z0-9_]{3,30}[A-Za-z0-9])(?:\/(\d+))?\/?$
+      location: turrit://resolve?domain=$1&post=$2
+      status-code: 307
+
+    # 匹配内置代理配置 (MTProxy / Socks5)
+    - match: ^https?:\/\/t\.me\/proxy\?(.+)$
+      location: turrit://proxy?$1
+      status-code: 307
