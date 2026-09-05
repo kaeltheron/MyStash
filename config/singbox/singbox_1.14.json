@@ -26,13 +26,25 @@
       },
       {
         "tag": "cn-doh",
-        "type": "quic",
-        "server": "223.5.5.5"
+        "type": "https",
+        "server": "223.5.5.5",
+        "server_port": 443,
+        "path": "/dns-query",
+        "tls": {
+          "enabled": true,
+          "server_name": "dns.alidns.com"
+        }
       },
       {
         "tag": "proxy-doh",
         "type": "https",
         "server": "8.8.8.8",
+        "server_port": 443,
+        "path": "/dns-query",
+        "tls": {
+          "enabled": true,
+          "server_name": "dns.google"
+        },
         "detour": "Google"
       },
       {
@@ -58,14 +70,11 @@
           "msftncsi.com",
           "music.163.com",
           "y.qq.com",
-          "xboxlive.com",
-          "srv.nintendo.net",
           "cmpassport.com"
         ],
         "domain_keyword": [
           "stun",
           "time",
-          "xbox"
         ],
         "server": "local-dns",
         "action": "route"
@@ -91,7 +100,6 @@
           "AAAA"
         ],
         "server": "fakeip",
-        "rewrite_ttl": 1,
         "action": "route"
       }
     ],
