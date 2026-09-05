@@ -401,9 +401,7 @@
           "spotify_domain",
           "tiktok_domain",
           "pixiv_domain",
-          "gfw_domain",
-          "cloudflare_domain",
-          "cloudflare_ip"
+          "gfw_domain"
         ],
         "action": "route",
         "outbound": "国际媒体"
@@ -523,12 +521,6 @@
         "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/pixiv.srs"
       },
       {
-        "tag": "cloudflare_domain",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cloudflare.srs"
-      },
-      {
         "tag": "gfw_domain",
         "type": "remote",
         "format": "binary",
@@ -569,12 +561,6 @@
         "type": "remote",
         "format": "binary",
         "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs"
-      },
-      {
-        "tag": "cloudflare_ip",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cloudflare.srs"
       }
     ]
   }
