@@ -1,0 +1,715 @@
+{
+    "$schema": "https://sing-box.sagernet.org/schema.json",
+    "experimental": {
+        "cache_file": {
+            "enabled": true,
+            "store_dns": true
+        }
+    },
+    "log": {
+        "level": "warn",
+        "timestamp": true
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "cn_bootstrap",
+                "type": "udp",
+                "server": "223.5.5.5",
+                "server_port": 53
+            },
+            {
+                "tag": "cn_dns",
+                "type": "tls",
+                "server": "223.5.5.5",
+                "server_port": 853
+            },
+            {
+                "tag": "proxy_dns",
+                "type": "tls",
+                "server": "1.1.1.1",
+                "server_port": 853,
+                "detour": "Default"
+            },
+            {
+                "tag": "paypal_dns",
+                "type": "tls",
+                "server": "8.8.8.8",
+                "server_port": 853,
+                "detour": "PayPal"
+            },
+            {
+                "tag": "ai_dns",
+                "type": "tls",
+                "server": "8.8.8.8",
+                "server_port": 853,
+                "detour": "AI-Service"
+            },
+            {
+                "tag": "tiktok_dns",
+                "type": "tls",
+                "server": "8.8.8.8",
+                "server_port": 853,
+                "detour": "TikTok"
+            },
+            {
+                "tag": "media_dns",
+                "type": "tls",
+                "server": "8.8.8.8",
+                "server_port": 853,
+                "detour": "Streaming-Media"
+            },
+            {
+                "tag": "telegram_dns",
+                "type": "tls",
+                "server": "8.8.8.8",
+                "server_port": 853,
+                "detour": "Telegram"
+            },
+            {
+                "tag": "instagram_dns",
+                "type": "tls",
+                "server": "8.8.8.8",
+                "server_port": 853,
+                "detour": "Instagram"
+            },
+            {
+                "tag": "google_dns",
+                "type": "tls",
+                "server": "8.8.8.8",
+                "server_port": 853,
+                "detour": "Google"
+            }
+        ],
+        "rules": [
+            {
+                "rule_set": "adobe_reject",
+                "action": "reject",
+                "method": "default"
+            },
+            {
+                "clash_mode": "direct",
+                "server": "cn_dns"
+            },
+            {
+                "clash_mode": "global",
+                "server": "proxy_dns"
+            },
+            {
+                "domain_suffix": [
+                    "ottiptv.cc"
+                ],
+                "server": "cn_dns"
+            },
+            {
+                "rule_set": "paypal",
+                "server": "paypal_dns"
+            },
+            {
+                "rule_set": "aiservice",
+                "server": "ai_dns"
+            },
+            {
+                "rule_set": "tiktok",
+                "server": "tiktok_dns"
+            },
+            {
+                "rule_set": [
+                    "netflixsite",
+                    "hbo",
+                    "disney",
+                    "hulu"
+                ],
+                "server": "media_dns"
+            },
+            {
+                "rule_set": "telegramsite",
+                "server": "telegram_dns"
+            },
+            {
+                "rule_set": "instagram",
+                "server": "instagram_dns"
+            },
+            {
+                "rule_set": "googlesite",
+                "server": "google_dns"
+            },
+            {
+                "rule_set": "cngames",
+                "server": "cn_dns"
+            },
+            {
+                "rule_set": "gfw",
+                "server": "proxy_dns"
+            },
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "domain_suffix": [
+                            ".cn"
+                        ]
+                    },
+                    {
+                        "rule_set": "cnsite"
+                    }
+                ],
+                "server": "cn_dns"
+            }
+        ],
+        "final": "proxy_dns",
+        "strategy": "ipv4_only",
+        "reverse_mapping": true,
+        "optimistic": {
+            "enabled": true,
+            "timeout": "3d"
+        },
+        "timeout": "10s"
+    },
+    "http_clients": [
+        {
+            "tag": "rule-set-direct",
+            "version": 2,
+            "domain_resolver": "cn_bootstrap"
+        }
+    ],
+    "inbounds": [
+        {
+            "type": "tun",
+            "tag": "tun-in",
+            "address": [
+                "172.18.0.1/30"
+            ],
+            "mtu": 1500,
+            "auto_route": true,
+            "route_exclude_address": [
+                "10.0.0.0/8",
+                "100.64.0.0/10",
+                "169.254.0.0/16",
+                "172.16.0.0/12",
+                "192.0.0.0/24",
+                "192.168.0.0/16"
+            ],
+            "endpoint_independent_nat": false,
+            "stack": "mixed",
+            "dns_mode": "hijack"
+        }
+    ],
+    "outbounds": [
+        {
+            "type": "selector",
+            "tag": "Default",
+            "interrupt_exist_connections": true,
+            "outbounds": [
+                "Auto"
+            ]
+        },
+        {
+            "type": "urltest",
+            "tag": "Auto",
+            "outbounds": [],
+            "interval": "3m",
+            "tolerance": 30,
+            "url": "https://cp.cloudflare.com/generate_204"
+        },
+        {
+            "type": "selector",
+            "tag": "Relay",
+            "interrupt_exist_connections": true,
+            "outbounds": [
+                "Direct-Out"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "PayPal",
+            "interrupt_exist_connections": true,
+            "outbounds": [
+                "Default",
+                "Auto"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "AI-Service",
+            "interrupt_exist_connections": true,
+            "outbounds": [
+                "Default",
+                "Auto"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "TikTok",
+            "interrupt_exist_connections": true,
+            "outbounds": [
+                "Default",
+                "Auto"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "Streaming-Media",
+            "interrupt_exist_connections": true,
+            "outbounds": [
+                "Default",
+                "Auto"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "Telegram",
+            "interrupt_exist_connections": true,
+            "outbounds": [
+                "Default",
+                "Auto"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "Instagram",
+            "interrupt_exist_connections": true,
+            "outbounds": [
+                "Default",
+                "Auto"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "BiliBili",
+            "interrupt_exist_connections": true,
+            "outbounds": [
+                "Direct-Out",
+                "Default",
+                "Auto"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "Google",
+            "interrupt_exist_connections": true,
+            "outbounds": [
+                "Default",
+                "Auto"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "HK",
+            "interrupt_exist_connections": true,
+            "outbounds": []
+        },
+        {
+            "type": "selector",
+            "tag": "JP",
+            "interrupt_exist_connections": true,
+            "outbounds": []
+        },
+        {
+            "type": "selector",
+            "tag": "US",
+            "interrupt_exist_connections": true,
+            "outbounds": []
+        },
+        {
+            "type": "selector",
+            "tag": "SG",
+            "interrupt_exist_connections": true,
+            "outbounds": []
+        },
+        {
+            "type": "selector",
+            "tag": "TW",
+            "interrupt_exist_connections": true,
+            "outbounds": []
+        },
+        {
+            "type": "selector",
+            "tag": "KR",
+            "interrupt_exist_connections": true,
+            "outbounds": []
+        },
+        {
+            "type": "selector",
+            "tag": "UK",
+            "interrupt_exist_connections": true,
+            "outbounds": []
+        },
+        {
+            "type": "urltest",
+            "tag": "Auto-HK",
+            "outbounds": [],
+            "interval": "3m",
+            "tolerance": 30,
+            "url": "https://cp.cloudflare.com/generate_204"
+        },
+        {
+            "type": "urltest",
+            "tag": "Auto-JP",
+            "outbounds": [],
+            "interval": "3m",
+            "tolerance": 30,
+            "url": "https://cp.cloudflare.com/generate_204"
+        },
+        {
+            "type": "urltest",
+            "tag": "Auto-US",
+            "outbounds": [],
+            "interval": "3m",
+            "tolerance": 30,
+            "url": "https://cp.cloudflare.com/generate_204"
+        },
+        {
+            "type": "urltest",
+            "tag": "Auto-SG",
+            "outbounds": [],
+            "interval": "3m",
+            "tolerance": 30,
+            "url": "https://cp.cloudflare.com/generate_204"
+        },
+        {
+            "type": "urltest",
+            "tag": "Auto-TW",
+            "outbounds": [],
+            "interval": "3m",
+            "tolerance": 30,
+            "url": "https://cp.cloudflare.com/generate_204"
+        },
+        {
+            "type": "urltest",
+            "tag": "Auto-KR",
+            "outbounds": [],
+            "interval": "3m",
+            "tolerance": 30,
+            "url": "https://cp.cloudflare.com/generate_204"
+        },
+        {
+            "type": "urltest",
+            "tag": "Auto-UK",
+            "outbounds": [],
+            "interval": "3m",
+            "tolerance": 30,
+            "url": "https://cp.cloudflare.com/generate_204"
+        },
+        {
+            "type": "direct",
+            "tag": "Direct-Out",
+            "domain_resolver": "cn_dns"
+        }
+    ],
+    "route": {
+        "final": "Default",
+        "auto_detect_interface": true,
+        "default_http_client": "rule-set-direct",
+        "default_domain_resolver": "proxy_dns",
+        "rules": [
+            {
+                "action": "sniff",
+                "sniffer": [
+                    "http",
+                    "tls",
+                    "quic",
+                    "dns",
+                    "bittorrent"
+                ],
+                "timeout": "500ms"
+            },
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "protocol": "dns"
+                    },
+                    {
+                        "port": 53
+                    }
+                ],
+                "action": "hijack-dns"
+            },
+            {
+                "network": "icmp",
+                "outbound": "Direct-Out"
+            },
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "network": "udp",
+                        "port": 443
+                    },
+                    {
+                        "protocol": "quic"
+                    }
+                ],
+                "action": "resolve"
+            },
+            {
+                "type": "logical",
+                "mode": "and",
+                "rules": [
+                    {
+                        "type": "logical",
+                        "mode": "or",
+                        "rules": [
+                            {
+                                "network": "udp",
+                                "port": 443
+                            },
+                            {
+                                "protocol": "quic"
+                            }
+                        ]
+                    },
+                    {
+                        "rule_set": [
+                            "cnsite",
+                            "cnip"
+                        ],
+                        "invert": true
+                    }
+                ],
+                "action": "reject"
+            },
+            {
+                "ip_is_private": true,
+                "outbound": "Direct-Out"
+            },
+            {
+                "clash_mode": "direct",
+                "outbound": "Direct-Out"
+            },
+            {
+                "clash_mode": "global",
+                "outbound": "Default"
+            },
+            {
+                "rule_set": "adobe_reject",
+                "action": "reject"
+            },
+            {
+                "protocol": "bittorrent",
+                "outbound": "Direct-Out"
+            },
+            {
+                "port": [
+                    5201
+                ],
+                "outbound": "Direct-Out"
+            },
+            {
+                "domain_suffix": [
+                    "ottiptv.cc"
+                ],
+                "outbound": "Direct-Out"
+            },
+            {
+                "rule_set": "paypal",
+                "outbound": "PayPal"
+            },
+            {
+                "rule_set": "telegramsite",
+                "outbound": "Telegram"
+            },
+            {
+                "rule_set": "tiktok",
+                "outbound": "TikTok"
+            },
+            {
+                "rule_set": "instagram",
+                "outbound": "Instagram"
+            },
+            {
+                "rule_set": "aiservice",
+                "outbound": "AI-Service"
+            },
+            {
+                "rule_set": [
+                    "netflixsite",
+                    "hbo",
+                    "disney",
+                    "hulu"
+                ],
+                "outbound": "Streaming-Media"
+            },
+            {
+                "rule_set": "bilibili",
+                "outbound": "BiliBili"
+            },
+            {
+                "rule_set": "google",
+                "outbound": "Google"
+            },
+            {
+                "rule_set": "cngames",
+                "outbound": "Direct-Out"
+            },
+            {
+                "rule_set": "gfw",
+                "outbound": "Default"
+            },
+            {
+                "action": "resolve"
+            },
+            {
+                "rule_set": "telegramip",
+                "outbound": "Telegram"
+            },
+            {
+                "rule_set": "netflixip",
+                "outbound": "Streaming-Media"
+            },
+            {
+                "rule_set": "cnip",
+                "outbound": "Direct-Out"
+            }
+        ],
+        "rule_set": [
+            {
+                "type": "remote",
+                "tag": "cnsite",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "cnip",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "cngames",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-games-!cn@cn.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "gfw",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/gfw.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "aiservice",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ai-!cn.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "paypal",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/paypal.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "tiktok",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "instagram",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/instagram.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "telegramip",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/telegram.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "telegramsite",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/telegram.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "netflixsite",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/netflix.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "netflixip",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/netflix.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "disney",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/disney.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "hbo",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/hbo.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "hulu",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/hulu.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "bilibili",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bilibili.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "google",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Google/Google.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "googlesite",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs",
+                "update_interval": "24h"
+            },
+            {
+                "tag": "adobe_reject",
+                "type": "inline",
+                "rules": [
+                    {
+                        "domain": [
+                            "crs.cr.adobe.com",
+                            "prod.adobegenuine.com"
+                        ],
+                        "domain_suffix": [
+                            "adobestats.io",
+                            "adobe.io",
+                            "hstatic.io"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
