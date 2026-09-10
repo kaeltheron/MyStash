@@ -87,7 +87,7 @@
   {"tag": "欧洲节点","type": "urltest","outbounds": [],"url": "https://www.gstatic.com/generate_204","interval": "5m","tolerance": 20},
   {"tag": "直连","type": "direct"}
 ],
-  "http_clients": [{"tag": "system_client","detour": "直连"}],
+  "http_clients": [{"tag": "system_client"}],
   "route": {
     "auto_detect_interface": true,
     "default_http_client": "system_client",
