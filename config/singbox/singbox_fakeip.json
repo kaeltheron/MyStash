@@ -115,7 +115,7 @@
       {"rule_set": ["telegram_domain", "telegram_ip"],"action": "route","outbound": "Telegram"},
       {"rule_set": ["netflix_domain","netflix_ip","biliintl_domain","reddit_domain","spotify_domain","tiktok_domain","pixiv_domain","gfw_domain"],"action": "route","outbound": "国际媒体"},
       {"rule_set": ["bilibili_domain", "cn_domain", "cn_ip"],"action": "route","outbound": "国内直连"},
-      {"rule_set": "geoip-cn", "action": "route","outbound": "直连"},
+      {"rule_set": "geoip_cn", "action": "route","outbound": "直连"},
       {"rule_set": "geolocation-!cn","action": "route","outbound": "兜底分流"}
     ],
     "rule_set": [
