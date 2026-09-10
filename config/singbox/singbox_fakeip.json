@@ -27,10 +27,9 @@
     ],
     "rules": [
       {"query_type": ["HTTPS","SVCB"],"action": "reject"},
-      {"domain_suffix": ["lan","local","msftconnecttest.com","msftncsi.com","music.163.com","y.qq.com","cmpassport.com"],
-        "domain_keyword": ["stun","time"],"server": "local-dns","action": "route"},
       {"clash_mode": "direct","server": "cn-doh","action": "route"},
       {"clash_mode": "global","server": "fakeip","action": "route"},
+      {"rule_set": "geosite-fakeipfilter-cn","server": "local-dns","action": "route"},
       {"rule_set": "cn_domain","server": "cn-doh","action": "route"},
       {"query_type": ["A","AAAA"],"server": "fakeip","action": "route"}
     ],
@@ -56,10 +55,11 @@
                 "169.254.0.0/16",
                 "172.16.0.0/12",
                 "192.0.0.0/24",
-                "192.168.0.0/16"
+                "192.168.0.0/16",
+                 "fd00::/8"
             ],
       "endpoint_independent_nat": false,
-      "stack": "system"
+      "stack": "mixed"
     },
     {
       "tag": "mixed-in",
@@ -120,6 +120,7 @@
       {"rule_set": "geolocation-!cn","action": "route","outbound": "兜底分流"}
     ],
     "rule_set": [
+      {"tag": "geosite-fakeipfilter-cn", "type": "remote", "format": "source", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/fakeipfilter-cn.json"},
       {"tag": "reject_ads", "type": "remote", "format": "binary","url": "https://gh-proxy.com/https://raw.githubusercontent.com/QuixoticHeart/rule-set/refs/heads/ruleset/singbox/version5/adrules.srs"},
       {"tag": "paypal", "type": "remote", "format": "binary","url": "https://gh-proxy.com/https://raw.githubusercontent.com/QuixoticHeart/rule-set/refs/heads/ruleset/singbox/version5/paypal.srs"},
       {"tag": "private_domain", "type": "remote", "format": "binary","url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs"},
