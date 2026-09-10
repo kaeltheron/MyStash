@@ -58,7 +58,7 @@
                 "192.168.0.0/16"
             ],
       "endpoint_independent_nat": false,
-      "stack": "mixed"
+      "stack": "system"
     },
     {
       "tag": "mixed-in",
