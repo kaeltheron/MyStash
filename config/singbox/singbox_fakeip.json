@@ -29,9 +29,9 @@
       {"query_type": ["HTTPS","SVCB"],"action": "reject"},
       {"clash_mode": "direct","server": "cn-doh","action": "route"},
       {"clash_mode": "global","server": "fakeip","action": "route"},
-      {"rule_set": "geosite-fakeipfilter-cn","server": "local-dns","action": "route"},
+      {"rule_set": "geosite-fakeipfilter-cn","server": "cn-doh","action": "route"},
       {"rule_set": "cn_domain","server": "cn-doh","action": "route"},
-      {"query_type": ["A","AAAA"],"server": "fakeip","action": "route"}
+      {"query_type": ["A","AAAA"],"server": "fakeip","action": "route", "rewrite_ttl": 1}
     ],
     "final": "proxy-doh",
     "strategy": "prefer_ipv4",
