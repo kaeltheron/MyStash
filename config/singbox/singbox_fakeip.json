@@ -86,7 +86,6 @@
     "default_domain_resolver": "local-dns",
     "final": "兜底分流",
     "rules": [
-      {"type": "logical", "mode": "and", "rules": [{"port": [53, 853], "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": "geoip_cn"}]}], "action": "bypass"},
       {"type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "telegram_ip"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "500ms"},
       {"type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
       {"ip_is_private": true,"action": "route", "outbound": "直连"},
@@ -107,7 +106,6 @@
       {"rule_set": ["telegram_domain", "telegram_ip"],"action": "route","outbound": "Telegram"},
       {"rule_set": ["netflix_domain","netflix_ip","biliintl_domain","reddit_domain","spotify_domain","tiktok_domain","pixiv_domain","gfw_domain"],"action": "route","outbound": "国际媒体"},
       {"rule_set": ["bilibili_domain", "cn_domain", "cn_ip"],"action": "route","outbound": "国内直连"},
-      {"rule_set": "geoip_cn", "action": "route","outbound": "直连"},
       {"rule_set": "geolocation-!cn","action": "route","outbound": "兜底分流"}
     ],
     "rule_set": [
@@ -136,7 +134,6 @@
       {"tag": "netflix_ip", "type": "remote", "format": "binary","url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/netflix.srs"},
       {"tag": "twitter_ip", "type": "remote", "format": "binary","url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/twitter.srs"},
       {"tag": "telegram_ip", "type": "remote", "format": "binary","url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs"},
-      {"tag": "geoip_cn", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/OneOhCloud/one-geoip/rule-set/one-china.srs"}
     ]
   }
 }
