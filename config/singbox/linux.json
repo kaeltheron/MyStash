@@ -45,7 +45,7 @@
   {"tag": "直连","type": "direct"}
 ],
   "http_clients": [
-    {"tag": "system_client", "detour": "直连"}
+    {"tag": "system_client"}
   ],
   "route": {
     "rules": [
@@ -131,22 +131,22 @@
       "listen_port": 9090,
       "secret": "",
       "dashboard": {
-        "enabled": true,
-        "path": "/etc/sing-box/dashboard"
+        "enabled": true
       }
     }
   ],
   "experimental": {
     "cache_file": {
       "enabled": true,
-      "path": "/etc/sing-box/cache.db",
+      "store_fakeip": true,
       "store_dns": true
     },
     "clash_api": {
       "external_controller": "0.0.0.0:9095",
-      "external_ui": "/etc/sing-box/ui",
-      "secret": "",
-      "default_mode": "Rule"
+      "external_ui": "ui",
+      "external_ui_download_url": "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip",
+      "external_ui_download_detour": "直连",
+      "default_mode": "rule"
     }
   },
   "certificate": {
